@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Neobrutalism Portfolio — global base styles.
+ *
+ * Styling is Tailwind-utility-first. The custom CSS here is limited to:
+ *   - the marquee animation keyframes (seamless infinite scroll)
+ *   - decorative background patterns (dot grid / line grid) used as section
+ *     texture so the layout does not feel flat
+ *   - the base page background and body font
+ *   - the reduced-motion fallback
+ */
+
+/*
+ * Marquee keyframes (Requirement 6.2):
+ * Translate the duplicated marquee track from its starting position to -50%,
+ * which scrolls exactly one copy of the doubled content off-screen so the loop
+ * is seamless. `transform: translateX()` is GPU-accelerated for a consistent
+ * 60fps animation (Requirement 6.3). The `tailwind.config.ts` exposes the
+ * matching `animate-marquee` utility (`marquee 20s linear infinite`); defining
+ * the keyframes here guarantees the animation resolves regardless of build
+ * order.
+ */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@layer base {
+  html {
+    /* Primary Neobrutalism yellow background applied at the root */
+    background-color: #ffde4d;
+    /* Enables native smooth scrolling for the Hero CTA scroll-to-section links */
+    scroll-behavior: smooth;
+  }
+
+  body {
+    /* Primary Neobrutalism yellow background */
+    background-color: #ffde4d;
+    /* Black structural text color for the high-contrast Neobrutalism look */
+    color: #000000;
+    /* Body uses the optimized monospace font exposed by next/font in layout.tsx */
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  }
+}
+
+@layer utilities {
+  /*
+   * Decorative dot-grid texture. Rendered as a repeating radial gradient of
+   * small black dots. Pair with a background color utility for the fill.
+   */
+  .bg-dots {
+    background-image: radial-gradient(#000000 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+
+  /*
+   * Decorative line-grid texture (graph-paper look) built from two crossing
+   * linear gradients.
+   */
+  .bg-grid {
+    background-image: linear-gradient(#00000014 1px, transparent 1px),
+      linear-gradient(90deg, #00000014 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+/*
+ * Reduced-motion support (Requirement 6.4):
+ * If the user has enabled a reduced-motion preference, the marquee text is
+ * displayed statically and all animations/transitions are effectively disabled.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable the marquee specifically so the banner renders static text */
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+
+  /* General fallback: neutralize animations and transitions for all elements */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

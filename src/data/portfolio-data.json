@@ -1,0 +1,128 @@
+{
+  "hero": {
+    "headline": "HI, I'm RICO ADRIAN NAIBAHO",
+    "subheadline": "Information Technology Student & Developer focused on building functional web applications and interactive systems.",
+    "ctaButtons": [
+      {
+        "label": "View My Projects",
+        "targetId": "projects"
+      },
+      {
+        "label": "Let's Connect",
+        "targetId": "contact"
+      }
+    ]
+  },
+  "about": {
+    "heading": "About Me",
+    "description": "Fresh graduate in Informatics Engineering with a GPA of 3.86/4.00 from Universitas Dipa Makassar. Experienced in full-stack\nweb development, and UI/UX design through hands-on academic and personal projects. Skilled in general IT troubleshooting, network configuration, and system maintenance. Quick learner with strong teamwork, problem-solving, and communication skills. Eager to contribute to a professional technology environment",
+    "skills": [
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "Unity Engine",
+      "UI Wireframing",
+      "Graphic Design",
+      "Tailwind CSS",
+      "DART",
+      "JAVASCRIPT",
+      "REACT",
+      "PYTHON",
+      "JAVA"
+    ],
+    "quickFacts": [
+      "IT Student & Developer",
+      "Backend & web architecture",
+      "Inventory & agri-tech systems",
+      "Always shipping side projects"
+    ]
+  },
+  "projects": {
+    "heading": "Projects",
+    "projects": [
+      {
+        "title": "Digital Inventory & Stock Management App",
+        "description": "Web-based inventory management featuring real-time Data Barang tracking and Stok Opname auditing.",
+        "technologies": [
+          "PHP",
+          "MySQL",
+          "Bootstrap",
+          "CSS"
+        ],
+        "detail": {
+          "image": "/project-inventory.png",
+          "longDescription": "A comprehensive web-based inventory management system designed for small-to-medium businesses. The application provides real-time tracking of product stock levels, automated low-stock alerts, and a full Stok Opname (stock audit) workflow that compares physical counts with system records. The backend is powered by Native with a well-structured MySQL schema, while the frontend delivers a clean, responsive UI built with BootstrapCSS.",
+          "status": "Completed",
+          "role": "Full-Stack Developer",
+          "duration": "3 months",
+          "highlights": [
+            "Real-time stock tracking with automatic update on every transaction",
+            "Full Stok Opname (audit) module with discrepancy reporting",
+            "Role-based access control — Admin, Gudang, and Viewer roles",
+            "PDF & Excel export for audit reports",
+            "Responsive dashboard with stock summary charts",
+            "Equipped with demand forecasts of future supply requirements"
+          ],
+          "links": [
+            {
+              "label": "Source Code",
+              "url": "https://github.com/kaidenThethunder",
+              "icon": "github"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Agricultural Tech Solution (Palm Oil Plantation Management Concept)",
+        "description": "A data-driven system for management, yield tracking, and logistics for palm oil plantation operations.",
+        "technologies": [
+          "Laravel",
+          "Database Design",
+          "Information Systems"
+        ],
+        "detail": {
+          "image": "/project-agritech.png",
+          "longDescription": "A concept system for digitalizing palm oil plantation management — from planting records and fertilization schedules to yield tracking and delivery logistics. The project demonstrates a normalized database schema capable of handling multi-block plantation data, worker assignments, and harvest batch tracing. Designed as a proof-of-concept for agricultural SMEs looking to move from spreadsheet-based tracking to a centralized web platform.",
+          "status": "Concept / In Progress",
+          "role": "System Analyst & Backend Developer",
+          "duration": "Ongoing",
+          "highlights": [
+            "Multi-block plantation management with GPS block mapping concept",
+            "Fertilization and maintenance schedule automation",
+            "Yield tracking per block with monthly comparison reports",
+            "Logistics module for delivery batch management",
+            "Normalized relational database design (3NF) for scalability"
+          ],
+          "links": [
+            {
+              "label": "Source Code",
+              "url": "https://github.com/kaidenThethunder",
+              "icon": "github"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Get In Touch",
+    "socialLinks": [
+      {
+        "platform": "github",
+        "url": "https://github.com/kaidenThethunder",
+        "label": "GitHub"
+      },
+      {
+        "platform": "linkedin",
+        "url": "https://linkedin.com/in/rico-adrian-naibaho-a3b669310",
+        "label": "LinkedIn"
+      },
+      {
+        "platform": "email",
+        "url": "mailto:ricoadrian568@gmail.com",
+        "label": "Email"
+      }
+    ]
+  },
+  "marqueeText": "• WEB DEVELOPMENT • LARAVEL • UNITY ENGINE • BACKEND SYSTEM • STOK OPNAME APP •"
+}
