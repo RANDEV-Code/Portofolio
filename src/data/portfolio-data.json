@@ -50,7 +50,7 @@
           "CSS"
         ],
         "detail": {
-          "image": "/project-inventory.png",
+          "image": "/Babevape.png",
           "longDescription": "A comprehensive web-based inventory management system designed for small-to-medium businesses. The application provides real-time tracking of product stock levels, automated low-stock alerts, and a full Stok Opname (stock audit) workflow that compares physical counts with system records. The backend is powered by Native with a well-structured MySQL schema, while the frontend delivers a clean, responsive UI built with BootstrapCSS.",
           "status": "Completed",
           "role": "Full-Stack Developer",
