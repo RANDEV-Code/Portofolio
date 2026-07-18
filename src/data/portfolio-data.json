@@ -101,6 +101,44 @@
             }
           ]
         }
+      },
+      {
+        "title": "Digital Library Document Management System (Unhas)",
+        "description": "Web-based academic document archive for Universitas Hasanuddin — managing S1 Skripsi, S2 Tesis, and S3 Disertasi with PDF storage, multi-filter search, and role-based access.\n",
+        "technologies": [
+          "Laravel 10",
+          "PHP",
+          "MySQL",
+          "Spatie Permission",
+          "Bootstrap",
+          "Maatwebsite Excel",
+          "AJAX",
+          "DomPDF"
+        ],
+        "detail": {
+          "image": "/perpus.png",
+          "longDescription": "A full-featured academic library management system developed for Universitas Hasanuddin. The platform centralizes the archival and retrieval of academic documents — S1 Skripsi, S2 Tesis, and S3 Disertasi — across all faculties and study programs. Administrators can upload original PDF files, manage document metadata, and generate formatted print reports. The system features dynamic AJAX-powered dropdowns for faculty-to-study-program selection, advanced multi-criteria filtering, and a statistics dashboard with chart visualizations. Role-based access control (RBAC) built with Spatie Laravel Permission ensures that each user role (Admin, Staff TU) can only perform authorized actions.",
+          "status": "Completed",
+          "role": "Full-Stack Developer",
+          "duration": "1 months",
+          "highlights": [
+            "PDF file upload & download with secure server-side storage",
+            "Advanced multi-filter search by Faculty, Study Program, Year, and Document Type",
+            "Dashboard analytics with charts — distribution by year, faculty, and program",
+            "Export to XLSX/XLS/CSV/HTML & bulk import from Excel (Maatwebsite Excel)",
+            "Print-ready PDF reports — full list and individual document (DomPDF)",
+            "Role-Based Access Control (RBAC) using Spatie Laravel Permission",
+            "Dynamic AJAX dropdown — Program Studi updates automatically per Faculty",
+            "Covers S1 Skripsi, S2 Tesis, and S3 Disertasi with unique document codes"
+          ],
+          "links": [
+            {
+              "label": "SourceCode",
+              "url": "https://github.com/RANDEV-Code",
+              "icon": "github"
+            }
+          ]
+        }
       }
     ]
   },
@@ -109,7 +147,7 @@
     "socialLinks": [
       {
         "platform": "github",
-        "url": "https://github.com/kaidenThethunder",
+        "url": "https://github.com/RANDEV-Code",
         "label": "GitHub"
       },
       {
