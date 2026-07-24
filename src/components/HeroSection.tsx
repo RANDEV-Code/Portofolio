@@ -46,7 +46,7 @@ export default function HeroSection({
       <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-6">
         {/* Eyebrow sticker */}
         <Sticker color="bg-cyan" rotate="-rotate-2">
-          ★ Portfolio 2026
+          ★ Portfolio RANDEV
         </Sticker>
 
         {/* ── Profile Photo ── */}
@@ -58,7 +58,7 @@ export default function HeroSection({
           >
             <div className="overflow-hidden rounded-full border-4 border-structural">
               <Image
-                src="/foto.jpg"
+                src="/foto1.png"
                 alt="Rico Adrian Naibaho — IT Developer"
                 width={200}
                 height={200}
