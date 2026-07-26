@@ -43,16 +43,26 @@ export default function MarqueeBanner({ text, className }: MarqueeBannerProps) {
         drives the scroll; `motion-reduce:animate-none` opts out for reduced
         motion.
       */}
-      <div className="flex w-max whitespace-nowrap animate-marquee motion-reduce:animate-none">
-        <span className="px-4 font-heading text-lg font-bold uppercase tracking-wide">
+      <div className="flex w-max items-center whitespace-nowrap animate-marquee motion-reduce:animate-none">
+        <span className="px-4 font-heading text-lg font-black uppercase tracking-wide">
+          {text}
+        </span>
+        {/* Rotated square separator so the two copies do not visually fuse into
+            one run-on string as they loop past the seam. */}
+        <span
+          aria-hidden="true"
+          className="mx-2 inline-block h-3 w-3 shrink-0 rotate-45 border-2 border-primary bg-pink"
+        />
+        <span
+          aria-hidden="true"
+          className="px-4 font-heading text-lg font-black uppercase tracking-wide text-cyan"
+        >
           {text}
         </span>
         <span
           aria-hidden="true"
-          className="px-4 font-heading text-lg font-bold uppercase tracking-wide text-cyan"
-        >
-          {text}
-        </span>
+          className="mx-2 inline-block h-3 w-3 shrink-0 rotate-45 border-2 border-primary bg-lime"
+        />
       </div>
     </div>
   );

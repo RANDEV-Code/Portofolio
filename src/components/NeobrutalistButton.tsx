@@ -37,16 +37,31 @@ export default function NeobrutalistButton({
     "border-neo-lg border-structural rounded-neo shadow-neo",
     "transition-all duration-neo",
     "hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-hover",
+    // Press feedback: the button drops onto the page and its shadow collapses,
+    // which is the tactile half of the Neobrutalist hover lift.
+    "active:translate-x-0 active:translate-y-0 active:shadow-neo-pressed",
     "focus-visible:-translate-x-1 focus-visible:-translate-y-1 focus-visible:shadow-neo-hover",
-    "focus-visible:outline-none",
+    // `focus-neo` draws a dashed offset outline. The lift alone was not a
+    // reliable focus indicator — it is subtle and vanishes entirely under
+    // `prefers-reduced-motion`.
+    "focus-neo",
     "cursor-pointer select-none",
   ].join(" ");
 
-  // Variant background colors: primary = yellow, secondary = white surface.
+  /*
+   * Variant background colors:
+   * - `primary`   — yellow; for use on white/neutral surfaces.
+   * - `secondary` — white surface.
+   * - `accent`    — lime; the high-contrast option for the yellow page
+   *                 background, where a yellow button only reads via its
+   *                 border and reads as disabled next to a white one.
+   */
   const variantClasses =
     variant === "secondary"
       ? "bg-surface text-structural"
-      : "bg-primary text-structural";
+      : variant === "accent"
+        ? "bg-lime text-structural"
+        : "bg-primary text-structural";
 
   const classes = `${baseClasses} ${variantClasses} ${className}`.trim();
 

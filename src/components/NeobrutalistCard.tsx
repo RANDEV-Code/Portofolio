@@ -36,15 +36,16 @@ export default function NeobrutalistCard({
     <div
       tabIndex={0}
       className={[
-        // Structural Neobrutalism styling
-        "group relative border-neo-lg border-structural rounded-neo shadow-neo bg-surface",
-        "p-6",
+        // Structural Neobrutalism styling. `overflow-hidden` lets the accent
+        // header bleed to the card edges without escaping the rounded corners.
+        "group relative overflow-hidden border-neo-lg border-structural rounded-neo shadow-neo bg-surface",
         // Smooth transition for the hover/focus lift effect
         "transition-all duration-neo",
         // Hover: lift (-4px, -4px) and expand shadow
         "hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-hover",
-        // Keyboard focus mirrors the hover affordance (req 7.5)
-        "focus-visible:-translate-x-1 focus-visible:-translate-y-1 focus-visible:shadow-neo-hover focus-visible:outline-none",
+        // Keyboard focus mirrors the hover affordance (req 7.5) and adds a
+        // dashed outline so the focused card is unambiguous.
+        "focus-visible:-translate-x-1 focus-visible:-translate-y-1 focus-visible:shadow-neo-hover focus-neo",
         // Also respond when an inner interactive element gains focus
         "focus-within:-translate-x-1 focus-within:-translate-y-1 focus-within:shadow-neo-hover",
         className ?? "",
@@ -52,35 +53,56 @@ export default function NeobrutalistCard({
         .filter(Boolean)
         .join(" ")}
     >
-      {/* Decorative index chip in the top-right corner */}
-      {index && (
+      {/*
+        Accent "title bar" — the card is framed like an application window.
+        This replaces the previous 16px accent stub, which was too small to
+        establish a color identity per card, and it gives the index chip a
+        home that does not overhang the card edge.
+      */}
+      <div
+        className={`flex items-center gap-2 border-b-neo-lg border-structural px-5 py-2.5 bg-stripes ${accentClassName}`}
+      >
+        {/* Window "traffic light" dots, purely decorative */}
         <span
           aria-hidden="true"
-          className="absolute -right-3 -top-3 flex h-11 w-11 items-center justify-center rounded-full border-neo-lg border-structural bg-structural font-heading text-sm font-bold text-primary shadow-neo-sm"
+          className="flex shrink-0 items-center gap-1.5"
         >
-          {index}
+          <span className="h-3 w-3 rounded-full border-2 border-structural bg-surface" />
+          <span className="h-3 w-3 rounded-full border-2 border-structural bg-surface/60" />
+          <span className="h-3 w-3 rounded-full border-2 border-structural bg-surface/30" />
         </span>
-      )}
 
-      {/* Accent bar above the title for a less plain card head */}
+        {index && (
+          <span
+            aria-hidden="true"
+            className="ml-auto flex h-7 min-w-[28px] items-center justify-center rounded-full border-2 border-structural bg-structural px-2 font-heading text-xs font-black text-primary"
+          >
+            {index}
+          </span>
+        )}
+      </div>
+
+      {/* Hover sweep — a single diagonal light pass across the card body. */}
       <span
         aria-hidden="true"
-        className={`mb-4 block h-3 w-16 border-neo-sm border-structural ${accentClassName}`}
+        className="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/45 to-transparent group-hover:animate-shimmer"
       />
 
-      <h3 className="font-heading text-h3 text-structural">{title}</h3>
+      <div className="relative p-6">
+        <h3 className="font-heading text-h3 text-structural">{title}</h3>
 
-      <p className="mt-3 font-body text-structural">{description}</p>
+        <p className="mt-3 font-body text-structural">{description}</p>
 
-      {technologies.length > 0 && (
-        <div className="mt-5 flex flex-wrap gap-2">
-          {technologies.map((tech) => (
-            <TechBadge key={tech} label={tech} />
-          ))}
-        </div>
-      )}
+        {technologies.length > 0 && (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {technologies.map((tech) => (
+              <TechBadge key={tech} label={tech} />
+            ))}
+          </div>
+        )}
 
-      {children}
+        {children}
+      </div>
     </div>
   );
 }

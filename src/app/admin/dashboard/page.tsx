@@ -9,18 +9,32 @@ import AboutEditor from "../_components/AboutEditor";
 import ProjectsEditor from "../_components/ProjectsEditor";
 import ContactEditor from "../_components/ContactEditor";
 import MarqueeEditor from "../_components/MarqueeEditor";
+import SiteEditor from "../_components/SiteEditor";
+import FooterEditor from "../_components/FooterEditor";
+import DecorEditor from "../_components/DecorEditor";
+import {
+  DEFAULT_DECOR,
+  DEFAULT_FOOTER,
+  DEFAULT_SITE,
+} from "@/data/portfolio-defaults";
 import type {
   HeroSectionProps,
   AboutSectionProps,
   ProjectsSectionProps,
   ContactSectionProps,
+  SiteSettings,
+  FooterContent,
+  DecorContent,
 } from "@/types";
 
 interface PortfolioData {
+  site: SiteSettings;
   hero: HeroSectionProps;
   about: AboutSectionProps;
   projects: ProjectsSectionProps;
   contact: ContactSectionProps;
+  footer: FooterContent;
+  decor: DecorContent;
   marqueeText: string;
 }
 
@@ -55,6 +69,24 @@ export default function AdminDashboard() {
 
   const hasUnsaved = data ? JSON.stringify(data) !== savedData : false;
 
+  /*
+   * Warn before leaving with edits that were never sent to the server.
+   *
+   * Adding a project only puts it in this component's state; it is not
+   * persisted until "Save to site" is pressed. Without this guard, closing the
+   * tab at that point silently discarded the work with no indication that
+   * anything had been lost.
+   */
+  useEffect(() => {
+    if (!hasUnsaved) return;
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, [hasUnsaved]);
+
   function showToast(type: "success" | "error", msg: string) {
     setToast({ type, msg });
     setTimeout(() => setToast(null), 3000);
@@ -73,7 +105,14 @@ export default function AdminDashboard() {
         setSavedData(JSON.stringify(data));
         showToast("success", "Tersimpan! Halaman utama sudah diperbarui.");
       } else {
-        showToast("error", "Gagal menyimpan. Coba lagi.");
+        // Surface the status — a bare "coba lagi" gave no way to tell an
+        // expired login (401) apart from a real server failure.
+        showToast(
+          "error",
+          res.status === 401
+            ? "Sesi login habis. Silakan login ulang — perubahan belum tersimpan."
+            : `Gagal menyimpan (HTTP ${res.status}). Perubahan belum tersimpan.`
+        );
       }
     } catch {
       showToast("error", "Error koneksi ke server.");
@@ -94,11 +133,14 @@ export default function AdminDashboard() {
   }
 
   const editorTitle: Record<Tab, string> = {
+    site: "Site & SEO",
     hero: "Hero Section",
+    decor: "Hero Decorations",
     about: "About Section",
     projects: "Projects",
     contact: "Contact & Social Links",
     marquee: "Marquee Banner",
+    footer: "Footer",
   };
 
   return (
@@ -120,7 +162,28 @@ export default function AdminDashboard() {
               </h2>
             </div>
 
-            {/* Editors */}
+            {/* Editors.
+                The `?? DEFAULT_*` fallbacks guard the case where the API
+                response predates a section (e.g. a cached response), so an
+                editor never binds to `undefined` and writes blanks on save. */}
+            {activeTab === "site" && (
+              <SiteEditor
+                data={data.site ?? DEFAULT_SITE}
+                onChange={(site) => setData((d) => (d ? { ...d, site } : d))}
+              />
+            )}
+            {activeTab === "decor" && (
+              <DecorEditor
+                data={data.decor ?? DEFAULT_DECOR}
+                onChange={(decor) => setData((d) => (d ? { ...d, decor } : d))}
+              />
+            )}
+            {activeTab === "footer" && (
+              <FooterEditor
+                data={data.footer ?? DEFAULT_FOOTER}
+                onChange={(footer) => setData((d) => (d ? { ...d, footer } : d))}
+              />
+            )}
             {activeTab === "hero" && (
               <HeroEditor
                 data={data.hero}

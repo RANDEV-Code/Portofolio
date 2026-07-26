@@ -1,13 +1,25 @@
 "use client";
 
-type Tab = "hero" | "about" | "projects" | "contact" | "marquee";
+type Tab =
+  | "site"
+  | "hero"
+  | "about"
+  | "projects"
+  | "contact"
+  | "marquee"
+  | "decor"
+  | "footer";
 
+/** Ordered roughly the way the sections appear down the live page. */
 const NAV: { id: Tab; label: string; icon: string }[] = [
+  { id: "site", label: "Site & SEO", icon: "⚙️" },
   { id: "hero", label: "Hero", icon: "🏠" },
+  { id: "decor", label: "Hero Decor", icon: "✨" },
   { id: "about", label: "About", icon: "👤" },
   { id: "projects", label: "Projects", icon: "🗂️" },
   { id: "contact", label: "Contact", icon: "📬" },
   { id: "marquee", label: "Marquee", icon: "📢" },
+  { id: "footer", label: "Footer", icon: "🔻" },
 ];
 
 interface AdminSidebarProps {

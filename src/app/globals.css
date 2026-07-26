@@ -47,6 +47,11 @@
     background-color: #ffde4d;
     /* Enables native smooth scrolling for the Hero CTA scroll-to-section links */
     scroll-behavior: smooth;
+    /*
+     * The sticky nav bar overlaps the top of the viewport, so anchor targets
+     * must stop below it instead of underneath it.
+     */
+    scroll-padding-top: 88px;
   }
 
   body {
@@ -56,6 +61,45 @@
     color: #000000;
     /* Body uses the optimized monospace font exposed by next/font in layout.tsx */
     font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  }
+
+  /*
+   * Themed text selection — the default blue highlight breaks the flat
+   * black/yellow palette the rest of the page commits to.
+   */
+  ::selection {
+    background-color: #ff90e8;
+    color: #000000;
+  }
+
+  /*
+   * Chunky scrollbar that matches the border/shadow language of the page
+   * (Firefox falls back to `scrollbar-color` below).
+   */
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #ffde4d;
+    border-left: 3px solid #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border: 3px solid #ffde4d;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #ff90e8;
+  }
+
+  @supports (scrollbar-color: black yellow) {
+    html {
+      scrollbar-color: #000000 #ffde4d;
+    }
   }
 }
 
@@ -78,6 +122,67 @@
       linear-gradient(90deg, #00000014 1px, transparent 1px);
     background-size: 28px 28px;
   }
+
+  /*
+   * Diagonal hatch texture. Used on inverted/dark panels and on accent strips
+   * where a dot grid would read as noise.
+   */
+  .bg-stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #0000001a 0px,
+      #0000001a 6px,
+      transparent 6px,
+      transparent 14px
+    );
+  }
+
+  /* Light-on-dark variant of .bg-stripes for the footer / inverted surfaces. */
+  .bg-stripes-light {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #ffffff12 0px,
+      #ffffff12 6px,
+      transparent 6px,
+      transparent 14px
+    );
+  }
+
+  /*
+   * Outlined display type — filled text is transparent and only the black
+   * stroke shows. Used for oversized decorative words.
+   */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px #000000;
+    paint-order: stroke fill;
+  }
+
+  .text-outline-light {
+    color: transparent;
+    -webkit-text-stroke: 2px #ffde4d;
+    paint-order: stroke fill;
+  }
+
+  /*
+   * Shared keyboard focus indicator.
+   *
+   * The interactive primitives previously set `focus-visible:outline-none` and
+   * relied on a translate + shadow change alone, which is easy to miss and
+   * disappears entirely under `prefers-reduced-motion`. This dashed offset
+   * outline is visible on every background color the page uses (yellow, white,
+   * black, and all five accents) and is applied in addition to the lift.
+   */
+  .focus-neo:focus-visible {
+    outline: 3px dashed #000000;
+    outline-offset: 4px;
+  }
+
+  /* Inverted variant for focusable elements sitting on the dark footer/nav. */
+  .focus-neo-light:focus-visible {
+    outline: 3px dashed #ffde4d;
+    outline-offset: 4px;
+  }
 }
 
 /*
@@ -90,6 +195,16 @@
   .animate-marquee,
   .animate-marquee-reverse {
     animation: none !important;
+  }
+
+  /*
+   * Scroll-reveal wrappers start at opacity 0 and are revealed by an animation.
+   * Neutralizing animations below would leave them permanently invisible, so
+   * force them visible up front.
+   */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /* General fallback: neutralize animations and transitions for all elements */

@@ -251,7 +251,23 @@ export default function ProjectForm({ initial, onSave, onCancel }: ProjectFormPr
       </div>
 
       {/* ── Actions ── */}
-      <div className="flex justify-end gap-3 border-t-2 border-white/10 pt-4">
+      <div className="flex flex-wrap items-center justify-end gap-3 border-t-2 border-white/10 pt-4">
+        {/*
+          This form does NOT write to the server — it only puts the project
+          into the dashboard's in-memory list. Persisting happens once, via
+          the "Save to site" button in the header.
+
+          The button here used to read "✓ Save Project", which made it look
+          like the work was already stored: the project appeared in the list,
+          the form closed, and nothing warned that leaving now would discard
+          it. The label and the note below spell out the remaining step.
+        */}
+        <p className="mr-auto font-['var(--font-jetbrains-mono)'] text-[11px] leading-snug text-orange-300">
+          Belum tersimpan — klik{" "}
+          <span className="font-bold">&quot;Save to site&quot;</span> di header
+          untuk menyimpan ke website.
+        </p>
+
         <button type="button" onClick={onCancel}
           className="rounded-[6px] px-5 py-2.5 font-['var(--font-space-grotesk)'] text-xs font-bold uppercase text-white/60 transition-colors hover:text-white"
           style={{ border: "3px solid rgba(255,255,255,0.2)" }}>
@@ -260,7 +276,7 @@ export default function ProjectForm({ initial, onSave, onCancel }: ProjectFormPr
         <button type="submit"
           className="rounded-[6px] px-6 py-2.5 font-['var(--font-space-grotesk)'] text-xs font-black uppercase text-black shadow-[3px_3px_0px_0px_#fff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#fff]"
           style={{ background: "#FFDE4D", border: "3px solid #fff" }}>
-          ✓ Save Project
+          ✓ Add to list
         </button>
       </div>
     </form>

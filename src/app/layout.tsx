@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { getPortfolioData } from "@/data/portfolio-data";
 import "./globals.css";
 
 /*
@@ -30,11 +31,20 @@ const jetBrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
-export const metadata: Metadata = {
-  title: "Rico Adrian Naibaho — IT Student & Developer",
-  description:
-    "Portfolio of Rico Adrian Naibaho, an Information Technology student and developer focused on backend development and web development, building functional web applications and interactive systems.",
-};
+/**
+ * Page metadata, read from the same JSON the admin panel writes.
+ *
+ * `generateMetadata` runs per request (the page is `force-dynamic`), so a title
+ * or description changed in the admin panel takes effect immediately — a static
+ * `metadata` export would have frozen both at build time.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const { site } = getPortfolioData();
+  return {
+    title: site.metaTitle,
+    description: site.metaDescription,
+  };
+}
 
 export default function RootLayout({
   children,
@@ -46,6 +56,17 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
     >
+      <head>
+        {/*
+          <ScrollReveal> starts its children at opacity 0 and reveals them from
+          a client-side IntersectionObserver. Without JS that observer never
+          runs, so force the wrappers visible for JS-off visitors and crawlers
+          that do not execute scripts.
+        */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1 !important;transform:none !important;}`}</style>
+        </noscript>
+      </head>
       <body>{children}</body>
     </html>
   );

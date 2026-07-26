@@ -41,12 +41,14 @@ export default function SocialLink({
   className,
 }: SocialLinkProps) {
   const baseClasses =
-    "inline-flex items-center justify-center gap-3 min-h-[44px] min-w-[44px] px-5 py-3 font-heading font-bold text-structural " +
+    "group inline-flex items-center justify-center gap-3 min-h-[44px] min-w-[44px] px-5 py-3 font-heading font-bold text-structural " +
     "border-neo-lg border-structural rounded-neo shadow-neo " +
     "transition-all duration-neo " +
     "hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neo-hover " +
+    "active:translate-x-0 active:translate-y-0 active:shadow-neo-pressed " +
     "focus-visible:-translate-x-1 focus-visible:-translate-y-1 focus-visible:shadow-neo-hover " +
-    "focus-visible:outline-none";
+    // Dashed offset outline — the lift alone is not a sufficient focus cue.
+    "focus-neo";
 
   const accentClass = PLATFORM_ACCENT[platform];
 
@@ -56,8 +58,19 @@ export default function SocialLink({
 
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className={classes}>
-      <SocialIcon platform={platform} className="h-5 w-5" />
+      {/* Icon sits in its own chip so it reads as a distinct object on the
+          colored fill rather than floating next to the label. */}
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-structural bg-surface transition-transform duration-neo group-hover:rotate-[-8deg] group-hover:scale-110">
+        <SocialIcon platform={platform} className="h-4 w-4" />
+      </span>
       {label}
+      {/* Outbound affordance — makes it obvious the link leaves the page. */}
+      <span
+        aria-hidden="true"
+        className="ml-auto text-xs opacity-40 transition-all duration-neo group-hover:translate-x-0.5 group-hover:opacity-100"
+      >
+        ↗
+      </span>
     </a>
   );
 }

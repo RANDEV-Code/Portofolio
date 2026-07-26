@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ProjectsSectionProps, ProjectCardData } from "@/types";
 import ProjectForm from "./ProjectForm";
+import { Field, Section, TextArea, TextInput } from "./ui";
 
 interface ProjectsEditorProps {
   data: ProjectsSectionProps;
@@ -70,6 +71,32 @@ export default function ProjectsEditor({ data, onChange }: ProjectsEditorProps) 
 
   return (
     <div className="flex flex-col gap-5">
+      <Section title="Judul Section">
+        <Field label="Heading">
+          <TextInput
+            value={data.heading}
+            onChange={(v) => onChange({ ...data, heading: v })}
+            placeholder="Projects"
+          />
+        </Field>
+
+        <Field label="Stiker Eyebrow">
+          <TextInput
+            value={data.eyebrow ?? ""}
+            onChange={(v) => onChange({ ...data, eyebrow: v })}
+            placeholder="◆ What I build"
+          />
+        </Field>
+
+        <Field label="Paragraf Pengantar">
+          <TextArea
+            value={data.intro ?? ""}
+            onChange={(v) => onChange({ ...data, intro: v })}
+            placeholder="A selection of systems I've designed and built..."
+          />
+        </Field>
+      </Section>
+
       {/* Project list */}
       {data.projects.length === 0 && (
         <p className="font-['var(--font-jetbrains-mono)'] text-sm text-white/40">

@@ -1,21 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import type { AboutSectionProps } from "@/types";
+import type { AboutSectionProps, StatItem } from "@/types";
+import {
+  ColorPicker,
+  Field,
+  ListEditor,
+  Section,
+  TextArea,
+  TextInput,
+  inputCls,
+  inputStyle,
+} from "./ui";
 
 interface AboutEditorProps {
   data: AboutSectionProps;
   onChange: (data: AboutSectionProps) => void;
-}
-
-const inputCls =
-  "w-full rounded-[6px] bg-[#0f0f0f] px-4 py-3 font-['var(--font-jetbrains-mono)'] text-sm text-white placeholder-white/30 outline-none transition-shadow focus:shadow-[0_0_0_3px_#FFDE4D]";
-const inputStyle = { border: "3px solid rgba(255,255,255,0.2)" };
-const labelCls =
-  "mb-2 block font-['var(--font-space-grotesk)'] text-xs font-bold uppercase tracking-wider text-white/60";
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <label className={labelCls}>{children}</label>;
 }
 
 export default function AboutEditor({ data, onChange }: AboutEditorProps) {
@@ -24,56 +24,153 @@ export default function AboutEditor({ data, onChange }: AboutEditorProps) {
 
   const facts = data.quickFacts ?? [];
 
+  const set = <K extends keyof AboutSectionProps>(
+    key: K,
+    value: AboutSectionProps[K]
+  ) => onChange({ ...data, [key]: value });
+
   /* ── Skills ── */
   function addSkill() {
     const trimmed = newSkill.trim();
     if (!trimmed || data.skills.includes(trimmed)) return;
-    onChange({ ...data, skills: [...data.skills, trimmed] });
+    set("skills", [...data.skills, trimmed]);
     setNewSkill("");
   }
   function removeSkill(skill: string) {
-    onChange({ ...data, skills: data.skills.filter((s) => s !== skill) });
+    set(
+      "skills",
+      data.skills.filter((s) => s !== skill)
+    );
   }
 
   /* ── Quick Facts ── */
   function addFact() {
     const trimmed = newFact.trim();
     if (!trimmed) return;
-    onChange({ ...data, quickFacts: [...facts, trimmed] });
+    set("quickFacts", [...facts, trimmed]);
     setNewFact("");
   }
   function removeFact(index: number) {
-    onChange({ ...data, quickFacts: facts.filter((_, i) => i !== index) });
+    set(
+      "quickFacts",
+      facts.filter((_, i) => i !== index)
+    );
   }
   function updateFact(index: number, value: string) {
-    const updated = facts.map((f, i) => (i === index ? value : f));
-    onChange({ ...data, quickFacts: updated });
+    set(
+      "quickFacts",
+      facts.map((f, i) => (i === index ? value : f))
+    );
   }
 
   return (
     <div className="flex flex-col gap-6">
+      <Section title="Judul & Deskripsi">
+        {/* The heading was previously not editable at all — the section title
+            on the live site was fixed to whatever the JSON already held. */}
+        <Field label="Heading">
+          <TextInput
+            value={data.heading}
+            onChange={(v) => set("heading", v)}
+            placeholder="About Me"
+          />
+        </Field>
 
-      {/* ── Description ── */}
-      <div>
-        <SectionLabel>Description</SectionLabel>
-        <textarea
-          rows={4}
-          style={inputStyle}
-          className={`${inputCls} resize-none`}
-          value={data.description}
-          onChange={(e) => onChange({ ...data, description: e.target.value })}
-          placeholder="About me description..."
+        <Field label="Stiker Eyebrow" hint="Label kecil di atas heading.">
+          <TextInput
+            value={data.eyebrow ?? ""}
+            onChange={(v) => set("eyebrow", v)}
+            placeholder="● Who am I"
+          />
+        </Field>
+
+        <Field label="Description">
+          <TextArea
+            rows={5}
+            value={data.description}
+            onChange={(v) => set("description", v)}
+            placeholder="About me description..."
+          />
+        </Field>
+
+        <Field label="Label Tab Kartu" hint="Tab kecil di sudut atas kartu deskripsi.">
+          <TextInput
+            value={data.cardLabel ?? ""}
+            onChange={(v) => set("cardLabel", v)}
+            placeholder="profile.md"
+          />
+        </Field>
+
+        <Field label="Baris Status" hint="Teks di bawah garis putus-putus kartu deskripsi.">
+          <TextInput
+            value={data.statusLine ?? ""}
+            onChange={(v) => set("statusLine", v)}
+            placeholder="Currently open to opportunities"
+          />
+        </Field>
+      </Section>
+
+      <Section
+        title="Statistik"
+        hint="Empat kotak angka di bawah heading. Nilai = angka besar, suffix = satuan kecil."
+      >
+        <ListEditor<StatItem>
+          items={data.stats ?? []}
+          onChange={(v) => set("stats", v)}
+          addLabel="Tambah Statistik"
+          makeNew={() => ({
+            value: "",
+            suffix: "",
+            label: "",
+            glyph: "⭐",
+            color: "cyan",
+          })}
+          renderItem={(item, update) => (
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <input
+                  style={inputStyle}
+                  className={`${inputCls} flex-1`}
+                  value={item.value}
+                  onChange={(e) => update({ ...item, value: e.target.value })}
+                  placeholder="3.86"
+                />
+                <input
+                  style={inputStyle}
+                  className={`${inputCls} w-24`}
+                  value={item.suffix}
+                  onChange={(e) => update({ ...item, suffix: e.target.value })}
+                  placeholder="/4.00"
+                />
+                <input
+                  style={inputStyle}
+                  className={`${inputCls} w-20 text-center`}
+                  value={item.glyph}
+                  onChange={(e) => update({ ...item, glyph: e.target.value })}
+                  placeholder="🎓"
+                />
+              </div>
+              <TextInput
+                value={item.label}
+                onChange={(label) => update({ ...item, label })}
+                placeholder="GPA"
+              />
+              <ColorPicker
+                value={item.color}
+                onChange={(color) => update({ ...item, color })}
+              />
+            </div>
+          )}
         />
-      </div>
+      </Section>
 
-      {/* ── Quick Facts ── */}
-      <div>
-        <SectionLabel>Quick Facts (kartu ungu)</SectionLabel>
-
-        <div className="flex flex-col gap-2 mb-3">
+      <Section title="Quick Facts" hint="Daftar poin di kartu ungu.">
+        <div className="mb-1 flex flex-col gap-2">
           {facts.map((fact, i) => (
-            <div key={i} className="flex gap-2 items-center">
-              <span className="font-['var(--font-jetbrains-mono)'] text-[#BEF264] text-sm shrink-0">▹</span>
+            <div key={i} className="flex items-center gap-2">
+              <span className="shrink-0 font-['var(--font-jetbrains-mono)'] text-sm text-[#BEF264]">
+                ▹
+              </span>
               <input
                 style={inputStyle}
                 className={`${inputCls} flex-1`}
@@ -93,69 +190,77 @@ export default function AboutEditor({ data, onChange }: AboutEditorProps) {
           ))}
         </div>
 
-        {/* Add new fact */}
         <div className="flex gap-2">
           <input
             style={inputStyle}
             className={`${inputCls} flex-1`}
             value={newFact}
             onChange={(e) => setNewFact(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addFact())}
+            onKeyDown={(e) =>
+              e.key === "Enter" && (e.preventDefault(), addFact())
+            }
             placeholder="Add quick fact (Enter to add)"
           />
           <button
             onClick={addFact}
             className="rounded-[6px] bg-[#FFDE4D] px-4 py-2 font-['var(--font-space-grotesk)'] text-xs font-black uppercase text-black shadow-[3px_3px_0px_0px_#fff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5"
-            style={{ borderWidth: "3px", border: "3px solid #fff" }}
+            style={{ border: "3px solid #fff" }}
           >
             + Add
           </button>
         </div>
-      </div>
+      </Section>
 
-      {/* ── Skills ── */}
-      <div>
-        <SectionLabel>Skills / Tech Stack</SectionLabel>
-
-        {/* Current skills as removable tags */}
-        <div className="mb-3 flex flex-wrap gap-2">
-          {data.skills.map((skill) => (
-            <span
-              key={skill}
-              className="flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 font-['var(--font-space-grotesk)'] text-xs font-bold uppercase text-black"
-              style={{ background: "#FFDE4D", border: "2px solid #000" }}
-            >
-              {skill}
-              <button
-                onClick={() => removeSkill(skill)}
-                className="ml-1 font-black text-black/60 hover:text-black"
-                aria-label={`Remove ${skill}`}
-              >
-                ✕
-              </button>
-            </span>
-          ))}
-        </div>
-
-        {/* Add new skill */}
-        <div className="flex gap-2">
-          <input
-            style={inputStyle}
-            className={`${inputCls} flex-1`}
-            value={newSkill}
-            onChange={(e) => setNewSkill(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addSkill())}
-            placeholder="Add skill (Enter to add)"
+      <Section title="Skills / Tech Stack">
+        <Field label="Judul Grid Skills">
+          <TextInput
+            value={data.skillsHeading ?? ""}
+            onChange={(v) => set("skillsHeading", v)}
+            placeholder="My Tech Stack"
           />
-          <button
-            onClick={addSkill}
-            className="rounded-[6px] bg-[#FFDE4D] px-4 py-2 font-['var(--font-space-grotesk)'] text-xs font-black uppercase text-black shadow-[3px_3px_0px_0px_#fff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5"
-            style={{ borderWidth: "3px", border: "3px solid #fff" }}
-          >
-            + Add
-          </button>
-        </div>
-      </div>
+        </Field>
+
+        <Field label="Daftar Skill">
+          <div className="mb-3 flex flex-wrap gap-2">
+            {data.skills.map((skill) => (
+              <span
+                key={skill}
+                className="flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 font-['var(--font-space-grotesk)'] text-xs font-bold uppercase text-black"
+                style={{ background: "#FFDE4D", border: "2px solid #000" }}
+              >
+                {skill}
+                <button
+                  onClick={() => removeSkill(skill)}
+                  className="ml-1 font-black text-black/60 hover:text-black"
+                  aria-label={`Remove ${skill}`}
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            <input
+              style={inputStyle}
+              className={`${inputCls} flex-1`}
+              value={newSkill}
+              onChange={(e) => setNewSkill(e.target.value)}
+              onKeyDown={(e) =>
+                e.key === "Enter" && (e.preventDefault(), addSkill())
+              }
+              placeholder="Add skill (Enter to add)"
+            />
+            <button
+              onClick={addSkill}
+              className="rounded-[6px] bg-[#FFDE4D] px-4 py-2 font-['var(--font-space-grotesk)'] text-xs font-black uppercase text-black shadow-[3px_3px_0px_0px_#fff] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{ border: "3px solid #fff" }}
+            >
+              + Add
+            </button>
+          </div>
+        </Field>
+      </Section>
     </div>
   );
 }

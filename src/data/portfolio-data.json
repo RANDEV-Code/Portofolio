@@ -1,5 +1,64 @@
 {
+  "site": {
+    "brandName": "RAN",
+    "brandSuffix": ".dev",
+    "navCtaLabel": "Hire Me",
+    "navCtaTarget": "contact",
+    "metaTitle": "Rico Adrian Naibaho — IT Student & Developer",
+    "metaDescription": "Portfolio of Rico Adrian Naibaho, an Information Technology student and developer focused on backend development and web development, building functional web applications and interactive systems."
+  },
   "hero": {
+    "photo": "/foto1.png",
+    "photoAlt": "Rico Adrian Naibaho — IT Developer",
+    "stickers": [
+      {
+        "label": "★ Portfolio RANDEV",
+        "color": "cyan"
+      },
+      {
+        "label": "⚡ IT & Fullstack Dev",
+        "color": "lime"
+      }
+    ],
+    "flankingBadges": [
+      {
+        "label": "💻 Fullstack",
+        "color": "cyan"
+      },
+      {
+        "label": "🎓 GPA 3.86",
+        "color": "lime"
+      }
+    ],
+    "rotatingBadge": "✦ OPEN TO WORK ✦",
+    "techPills": [
+      {
+        "label": "PHP",
+        "color": "purple"
+      },
+      {
+        "label": "Laravel",
+        "color": "pink"
+      },
+      {
+        "label": "React",
+        "color": "cyan"
+      },
+      {
+        "label": "MySQL",
+        "color": "lime"
+      },
+      {
+        "label": "Tailwind CSS",
+        "color": "orange"
+      },
+      {
+        "label": "Unity",
+        "color": "primary"
+      }
+    ],
+    "availability": "Available for collaboration",
+    "scrollCue": "Scroll Down",
     "headline": "HI, I'm RICO ADRIAN NAIBAHO",
     "subheadline": "Information Technology Student & Developer focused on building functional web applications and interactive systems.",
     "ctaButtons": [
@@ -14,6 +73,40 @@
     ]
   },
   "about": {
+    "eyebrow": "● Who am I",
+    "cardLabel": "profile.md",
+    "statusLine": "Currently open to opportunities",
+    "skillsHeading": "My Tech Stack",
+    "stats": [
+      {
+        "value": "3.86",
+        "suffix": "/4.00",
+        "label": "GPA",
+        "glyph": "🎓",
+        "color": "lime"
+      },
+      {
+        "value": "12",
+        "suffix": "+",
+        "label": "Technologies",
+        "glyph": "🧰",
+        "color": "cyan"
+      },
+      {
+        "value": "3",
+        "suffix": "+",
+        "label": "Shipped Projects",
+        "glyph": "🚀",
+        "color": "pink"
+      },
+      {
+        "value": "100",
+        "suffix": "%",
+        "label": "Remote Ready",
+        "glyph": "🌐",
+        "color": "purple"
+      }
+    ],
     "heading": "About Me",
     "description": "Fresh graduate in Informatics Engineering with a GPA of 3.86/4.00 from Universitas Dipa Makassar. Experienced in full-stack\nweb development, and UI/UX design through hands-on academic and personal projects. Skilled in general IT troubleshooting, network configuration, and system maintenance. Quick learner with strong teamwork, problem-solving, and communication skills. Eager to contribute to a professional technology environment",
     "skills": [
@@ -38,6 +131,8 @@
     ]
   },
   "projects": {
+    "eyebrow": "◆ What I build",
+    "intro": "A selection of systems I've designed and built — from inventory tooling to data-driven agri-tech concepts.",
     "heading": "Projects",
     "projects": [
       {
@@ -143,6 +238,12 @@
     ]
   },
   "contact": {
+    "eyebrow": "✉ Say hello",
+    "intro": "Have an idea, a project, or just want to connect? Drop a message and I'll get back to you.",
+    "responseTime": "Usually replies within 24 hours",
+    "socialHeading": "Find me online",
+    "quote": "Build functional things, ship them, iterate.",
+    "quoteAuthor": "Rico Adrian Naibaho",
     "heading": "Get In Touch",
     "socialLinks": [
       {
@@ -160,6 +261,54 @@
         "url": "mailto:ricoadrian568@gmail.com",
         "label": "Email"
       }
+    ]
+  },
+  "footer": {
+    "headlineTop": "Let's build",
+    "headlineOutline": "something great",
+    "name": "Rico Adrian Naibaho",
+    "blurb": "Informatics Engineering graduate building functional web applications and interactive systems.",
+    "availability": "Open to opportunities",
+    "location": "Made in Makassar, Indonesia 🇮🇩",
+    "copyrightName": "Rico Adrian Naibaho",
+    "credit": "Built with Next.js & Tailwind CSS"
+  },
+  "decor": {
+    "badges": [
+      {
+        "label": "📍 MAKASSAR, INDONESIA",
+        "color": "surface"
+      },
+      {
+        "label": "🎓 GPA 3.86 / 4.00",
+        "color": "lime"
+      },
+      {
+        "label": "⚡ Fullstack Developer",
+        "color": "purple"
+      },
+      {
+        "label": "⚡ SYSTEM ARCHITECTURE",
+        "color": "primary"
+      },
+      {
+        "label": "🚀 FAST SHIPPED CODE",
+        "color": "cyan"
+      },
+      {
+        "label": "🔥 100% PASSION FOR CODE",
+        "color": "pink"
+      },
+      {
+        "label": "✨ CREATIVE MIND",
+        "color": "lime"
+      }
+    ],
+    "codeFileName": "dev-mode.ts",
+    "codeStack": [
+      "PHP",
+      "Laravel",
+      "React"
     ]
   },
   "marqueeText": "• WEB DEVELOPMENT • LARAVEL • UNITY ENGINE • BACKEND SYSTEM • STOK OPNAME APP •"

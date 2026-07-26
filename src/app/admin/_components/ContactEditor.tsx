@@ -1,6 +1,7 @@
 "use client";
 
 import type { ContactSectionProps, SocialLinkData } from "@/types";
+import { Field, Section, TextArea, TextInput } from "./ui";
 
 interface ContactEditorProps {
   data: ContactSectionProps;
@@ -26,8 +27,83 @@ export default function ContactEditor({ data, onChange }: ContactEditorProps) {
     onChange({ ...data, socialLinks: updated });
   }
 
+  const set = <K extends keyof ContactSectionProps>(
+    key: K,
+    value: ContactSectionProps[K]
+  ) => onChange({ ...data, [key]: value });
+
   return (
     <div className="flex flex-col gap-6">
+      <Section title="Judul & Teks">
+        {/* The heading had no field here either — only the social links were
+            editable, so the section title was effectively frozen. */}
+        <Field label="Heading">
+          <TextInput
+            value={data.heading}
+            onChange={(v) => set("heading", v)}
+            placeholder="Get In Touch"
+          />
+        </Field>
+
+        <Field label="Stiker Eyebrow">
+          <TextInput
+            value={data.eyebrow ?? ""}
+            onChange={(v) => set("eyebrow", v)}
+            placeholder="✉ Say hello"
+          />
+        </Field>
+
+        <Field label="Paragraf Pengantar">
+          <TextArea
+            value={data.intro ?? ""}
+            onChange={(v) => set("intro", v)}
+            placeholder="Have an idea, a project, or just want to connect?..."
+          />
+        </Field>
+
+        <Field
+          label="Pill Waktu Respons"
+          hint="Mengurangi keraguan pengunjung sebelum mengirim pesan."
+        >
+          <TextInput
+            value={data.responseTime ?? ""}
+            onChange={(v) => set("responseTime", v)}
+            placeholder="Usually replies within 24 hours"
+          />
+        </Field>
+      </Section>
+
+      <Section title="Kolom Kanan">
+        <Field label="Judul Kolom Social">
+          <TextInput
+            value={data.socialHeading ?? ""}
+            onChange={(v) => set("socialHeading", v)}
+            placeholder="Find me online"
+          />
+        </Field>
+
+        <Field label="Kutipan">
+          <TextArea
+            rows={2}
+            value={data.quote ?? ""}
+            onChange={(v) => set("quote", v)}
+            placeholder="Build functional things, ship them, iterate."
+          />
+        </Field>
+
+        <Field label="Penulis Kutipan">
+          <TextInput
+            value={data.quoteAuthor ?? ""}
+            onChange={(v) => set("quoteAuthor", v)}
+            placeholder="Rico Adrian Naibaho"
+          />
+        </Field>
+      </Section>
+
+      <h3 className="font-['var(--font-space-grotesk)'] text-sm font-black uppercase tracking-wide text-[#FFDE4D]">
+        Social Links
+      </h3>
+
       {data.socialLinks.map((link, i) => (
         <div
           key={i}
