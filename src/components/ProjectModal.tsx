@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { ProjectModalProps } from "@/types";
 import TechBadge from "./TechBadge";
@@ -26,6 +26,30 @@ export default function ProjectModal({
 }: ProjectModalProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const { detail } = project;
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  const imageList = (function () {
+    const list: string[] = [];
+    if (detail?.image) list.push(detail.image);
+    if (detail?.images && Array.isArray(detail.images)) {
+      for (const img of detail.images) {
+        if (img && !list.includes(img)) {
+          list.push(img);
+        }
+      }
+    }
+    return list.length > 0 ? list : ["/foto1.png"];
+  })();
+
+  const nextImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentImageIdx((prev) => (prev + 1) % imageList.length);
+  };
+
+  const prevImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentImageIdx((prev) => (prev - 1 + imageList.length) % imageList.length);
+  };
 
   // Lock body scroll and focus close button on open
   useEffect(() => {
@@ -36,14 +60,22 @@ export default function ProjectModal({
     };
   }, []);
 
-  // Close on Escape
+  // Close on Escape or navigate carousel with left/right arrow keys
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (imageList.length > 1) {
+        if (e.key === "ArrowLeft") {
+          setCurrentImageIdx((prev) => (prev - 1 + imageList.length) % imageList.length);
+        }
+        if (e.key === "ArrowRight") {
+          setCurrentImageIdx((prev) => (prev + 1) % imageList.length);
+        }
+      }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+  }, [onClose, imageList.length]);
 
   if (!detail) return null;
 
@@ -109,16 +141,97 @@ export default function ProjectModal({
 
         {/* ── Scrollable body ── */}
         <div className="overflow-y-auto">
-          {/* Project image */}
-          <div className="relative h-52 w-full border-b-neo-lg border-structural sm:h-64">
+          {/* Project image / carousel */}
+          <div className="relative h-56 w-full border-b-neo-lg border-structural bg-structural sm:h-72 group select-none">
             <Image
-              src={detail.image}
-              alt={`${project.title} preview`}
+              src={imageList[currentImageIdx]}
+              alt={`${project.title} preview ${currentImageIdx + 1}`}
               fill
-              className="object-cover"
+              className="object-cover transition-all duration-300"
               sizes="(max-width: 768px) 100vw, 768px"
             />
+
+            {/* Carousel Controls when more than 1 image */}
+            {imageList.length > 1 && (
+              <>
+                {/* Counter Badge top-left */}
+                <div className="absolute left-4 top-4 z-20 rounded-neo border-neo-sm border-structural bg-structural px-3 py-1 font-heading text-xs font-black tracking-widest text-primary shadow-neo-sm">
+                  ◆ {currentImageIdx + 1} / {imageList.length}
+                </div>
+
+                {/* Left Arrow Button */}
+                <button
+                  type="button"
+                  onClick={prevImage}
+                  aria-label="Previous image"
+                  className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-neo border-neo-sm border-structural bg-surface/90 font-heading text-lg font-black text-structural shadow-neo-sm transition-all duration-neo hover:-translate-x-0.5 hover:-translate-y-1 hover:bg-primary hover:shadow-neo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-structural"
+                >
+                  ←
+                </button>
+
+                {/* Right Arrow Button */}
+                <button
+                  type="button"
+                  onClick={nextImage}
+                  aria-label="Next image"
+                  className="absolute right-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-neo border-neo-sm border-structural bg-surface/90 font-heading text-lg font-black text-structural shadow-neo-sm transition-all duration-neo hover:-translate-x-0.5 hover:-translate-y-1 hover:bg-primary hover:shadow-neo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-structural"
+                >
+                  →
+                </button>
+
+                {/* Dot Indicators at bottom */}
+                <div className="absolute bottom-3 left-1/2 z-20 -translate-x-1/2 flex items-center gap-2 rounded-neo border-neo-sm border-structural bg-structural/80 px-3 py-1.5 backdrop-blur-sm">
+                  {imageList.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIdx(idx);
+                      }}
+                      aria-label={`Go to image ${idx + 1}`}
+                      className={`h-2.5 rounded-full transition-all duration-neo border border-structural ${
+                        idx === currentImageIdx
+                          ? "w-6 bg-primary shadow-[1px_1px_0px_0px_#000]"
+                          : "w-2.5 bg-surface/60 hover:bg-surface"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
+
+          {/* Thumbnail Strip (if > 1 image) */}
+          {imageList.length > 1 && (
+            <div className="flex items-center gap-3 overflow-x-auto border-b-neo-lg border-structural bg-primary/20 px-6 py-3">
+              <span className="shrink-0 font-heading text-[10px] font-black uppercase tracking-widest text-structural/70">
+                Gallery ({imageList.length}):
+              </span>
+              <div className="flex items-center gap-2">
+                {imageList.map((imgUrl, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentImageIdx(idx)}
+                    className={`relative h-12 w-20 shrink-0 overflow-hidden rounded-neo border-neo-sm border-structural transition-all duration-neo ${
+                      idx === currentImageIdx
+                        ? "ring-2 ring-structural shadow-neo -translate-y-0.5 opacity-100 bg-surface"
+                        : "opacity-60 hover:opacity-100 hover:shadow-neo-sm"
+                    }`}
+                  >
+                    <Image
+                      src={imgUrl}
+                      alt={`Thumbnail ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="p-6 sm:p-8">
             {/* Title + status pill */}

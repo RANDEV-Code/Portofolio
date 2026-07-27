@@ -164,6 +164,8 @@ export interface ProjectCardData {
 export interface ProjectDetail {
   /** Preview / mockup image path (relative to /public) */
   image: string;
+  /** Optional array of image paths for carousel preview in modal */
+  images?: string[];
   /** Full-length description for the modal body */
   longDescription: string;
   /** E.g. "Completed", "In Progress", "Concept" */

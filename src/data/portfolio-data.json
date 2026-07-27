@@ -234,6 +234,45 @@
             }
           ]
         }
+      },
+      {
+        "title": "FishingHub - Platform Komunitas Pemancing Indonesia",
+        "description": "Platform web komunitas pemancing berbasis Native PHP & MySQL yang dilengkapi peta spot interaktif, forum diskusi, galeri tangkapan, artikel, dan manajemen event.",
+        "technologies": [
+          "PHP",
+          "MySQL",
+          "JavaScript",
+          "CSS",
+          "HTML5",
+          "Leaflet.js",
+          "OpenStreetMap"
+        ],
+        "detail": {
+          "image": "",
+          "images": [
+            "/fishinghub.png",
+            "/fishinghubhome.png",
+            "/fishinghubstrike.png"
+          ],
+          "longDescription": "FishingHub adalah platform komunitas digital serba ada yang dirancang khusus untuk para penggemar memancing (angler) di Indonesia. Dibangun dari nol menggunakan Native PHP dan database MySQL dengan arsitektur berkinerja tinggi tanpa ketergantungan framework berat.\n\nAplikasi ini menyediakan sistem peta interaktif berbasis Leaflet.js untuk pemetaan spot memancing darat dan laut secara real-time lengkap dengan sistem rating. Selain itu, pengguna dapat berdiskusi di forum komunitas, berbagi foto hasil tangkapan di galeri masonry, membaca artikel tips teknik & peralatan, serta mendaftar event dan turnamen memancing. Dilengkapi juga dengan Admin Panel lengkap untuk administrasi pengguna, postingan, dan moderasi konten.",
+          "status": "Completed",
+          "role": "Full-Stack Developer",
+          "duration": "2 month",
+          "highlights": [
+            "Interactive Fishing Spot Map",
+            "Custom Ocean-Themed Design System",
+            "Multi-Feature Community Hub",
+            "Admin Dashboard Panel",
+            "Secure Architecture"
+          ],
+          "links": [
+            {
+              "label": "Source Code",
+              "url": "https://github.com/RANDEV-Code/FishingHub",
+              "icon": "github"
+            }
+          ]
+        }
       }
     ]
   },

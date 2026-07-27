@@ -25,6 +25,7 @@ const STATUS_OPTIONS = [
 
 const BLANK_DETAIL: ProjectDetail = {
   image: "",
+  images: [],
   longDescription: "",
   status: "Completed",
   role: "",
@@ -72,6 +73,21 @@ export default function ProjectForm({ initial, onSave, onCancel }: ProjectFormPr
 
   function removeTech(tech: string) {
     setForm((f) => ({ ...f, technologies: f.technologies.filter((t) => t !== tech) }));
+  }
+
+  /* ── Carousel Images ── */
+  function updateImage(i: number, val: string) {
+    const imgs = [...(detail.images ?? [])];
+    imgs[i] = val;
+    setDetail({ images: imgs });
+  }
+
+  function addImage() {
+    setDetail({ images: [...(detail.images ?? []), ""] });
+  }
+
+  function removeImage(i: number) {
+    setDetail({ images: (detail.images ?? []).filter((_, j) => j !== i) });
   }
 
   /* ── Highlights ── */
@@ -182,13 +198,38 @@ export default function ProjectForm({ initial, onSave, onCancel }: ProjectFormPr
         </div>
 
         <div>
-          <label className={labelCls}>Preview Image Path</label>
+          <label className={labelCls}>Preview Image Path (Thumbnail Utama)</label>
           <input style={inputStyle} className={inputCls} value={detail.image}
             onChange={(e) => setDetail({ image: e.target.value })}
             placeholder="/project-myapp.png" />
           <p className="mt-1 font-['var(--font-jetbrains-mono)'] text-[11px] text-white/30">
             Letakkan file gambar di folder /public lalu tulis path-nya di sini.
           </p>
+        </div>
+
+        {/* Carousel Images */}
+        <div>
+          <label className={labelCls}>Gallery / Carousel Images (Opsional untuk Slide)</label>
+          <p className="mb-2 font-['var(--font-jetbrains-mono)'] text-[11px] text-white/40">
+            Tambahkan path gambar lain (misal /screenshot-2.png) agar bisa digeser (carousel) saat membuka detail proyek.
+          </p>
+          <div className="flex flex-col gap-2">
+            {(detail.images ?? []).map((img, i) => (
+              <div key={i} className="flex gap-2">
+                <input style={inputStyle} className={`${inputCls} flex-1`} value={img}
+                  onChange={(e) => updateImage(i, e.target.value)}
+                  placeholder={`/screenshot-${i + 1}.png`} />
+                <button type="button" onClick={() => removeImage(i)}
+                  className="rounded-[6px] px-3 py-2 font-bold text-red-400 transition-colors hover:text-red-300"
+                  style={{ border: "2px solid rgba(239,68,68,0.3)" }}>✕</button>
+              </div>
+            ))}
+          </div>
+          <button type="button" onClick={addImage}
+            className="mt-2 rounded-[6px] px-4 py-2 font-['var(--font-space-grotesk)'] text-xs font-bold uppercase text-white/60 transition-colors hover:text-white"
+            style={{ border: "2px solid rgba(255,255,255,0.2)" }}>
+            + Add Carousel Image
+          </button>
         </div>
 
         <div>
