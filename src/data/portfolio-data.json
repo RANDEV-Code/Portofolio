@@ -157,13 +157,7 @@
             "Responsive dashboard with stock summary charts",
             "Equipped with demand forecasts of future supply requirements"
           ],
-          "links": [
-            {
-              "label": "Source Code",
-              "url": "https://github.com/kaidenThethunder",
-              "icon": "github"
-            }
-          ]
+          "links": []
         }
       },
       {
@@ -195,13 +189,7 @@
             "Dynamic AJAX dropdown — Program Studi updates automatically per Faculty",
             "Covers S1 Skripsi, S2 Tesis, and S3 Disertasi with unique document codes"
           ],
-          "links": [
-            {
-              "label": "SourceCode",
-              "url": "https://github.com/RANDEV-Code",
-              "icon": "github"
-            }
-          ]
+          "links": []
         }
       },
       {
@@ -234,13 +222,7 @@
             "Admin Dashboard Panel",
             "Secure Architecture"
           ],
-          "links": [
-            {
-              "label": "Source Code",
-              "url": "https://github.com/RANDEV-Code/FishingHub",
-              "icon": "github"
-            }
-          ]
+          "links": []
         }
       },
       {
