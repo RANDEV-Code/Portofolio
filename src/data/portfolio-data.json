@@ -120,7 +120,6 @@
       "DART",
       "JAVASCRIPT",
       "REACT",
-      "PYTHON",
       "JAVA"
     ],
     "quickFacts": [
@@ -157,36 +156,6 @@
             "PDF & Excel export for audit reports",
             "Responsive dashboard with stock summary charts",
             "Equipped with demand forecasts of future supply requirements"
-          ],
-          "links": [
-            {
-              "label": "Source Code",
-              "url": "https://github.com/kaidenThethunder",
-              "icon": "github"
-            }
-          ]
-        }
-      },
-      {
-        "title": "Agricultural Tech Solution (Palm Oil Plantation Management Concept)",
-        "description": "A data-driven system for management, yield tracking, and logistics for palm oil plantation operations.",
-        "technologies": [
-          "Laravel",
-          "Database Design",
-          "Information Systems"
-        ],
-        "detail": {
-          "image": "/project-agritech.png",
-          "longDescription": "A concept system for digitalizing palm oil plantation management — from planting records and fertilization schedules to yield tracking and delivery logistics. The project demonstrates a normalized database schema capable of handling multi-block plantation data, worker assignments, and harvest batch tracing. Designed as a proof-of-concept for agricultural SMEs looking to move from spreadsheet-based tracking to a centralized web platform.",
-          "status": "Concept / In Progress",
-          "role": "System Analyst & Backend Developer",
-          "duration": "Ongoing",
-          "highlights": [
-            "Multi-block plantation management with GPS block mapping concept",
-            "Fertilization and maintenance schedule automation",
-            "Yield tracking per block with monthly comparison reports",
-            "Logistics module for delivery batch management",
-            "Normalized relational database design (3NF) for scalability"
           ],
           "links": [
             {
@@ -272,6 +241,39 @@
               "icon": "github"
             }
           ]
+        }
+      },
+      {
+        "title": "Smart Sawit — Manajemen Perkebunan Kelapa Sawit Digital",
+        "description": "Aplikasi mobile smart farming berbasis Flutter dengan arsitektur offline-first dan integrasi GIS untuk mendigitalisasi operasional, perawatan, panen, dan keuangan perkebunan kelapa sawit secara end-to-end.",
+        "technologies": [
+          "Flutter",
+          "Laravel 12",
+          "MySQL",
+          "SQLite",
+          "Google Maps",
+          "BMKG API"
+        ],
+        "detail": {
+          "image": "/sawit1.jpeg",
+          "images": [
+            "/sawit2.jpeg",
+            "/sawit3.jpeg",
+            "/sawit4.jpeg",
+            "/sawit5.jpeg"
+          ],
+          "longDescription": "Smart Sawit adalah aplikasi mobile smart farming yang dirancang untuk mendigitalisasi seluruh siklus operasional perkebunan kelapa sawit — mulai dari pemetaan lahan, perawatan tanaman, pencatatan panen, hingga analisis keuangan. Dibangun dengan arsitektur Offline-First, aplikasi ini tetap berfungsi penuh di daerah perkebunan tanpa sinyal internet. Semua data disimpan ke SQLite lokal terlebih dahulu, lalu disinkronkan otomatis ke backend Laravel saat koneksi tersedia melalui mekanisme Upsert berbasis UUID untuk mencegah duplikasi.",
+          "status": "In Progress",
+          "role": "Full-Stack Developer",
+          "duration": "3 months",
+          "highlights": [
+            "Pemetaan GIS Interaktif",
+            "Arsitektur Offline-First",
+            "Weather Gate (BMKG Integration)",
+            "Otomasi Rotasi Panen",
+            "Manajemen Inventory Pupuk"
+          ],
+          "links": []
         }
       }
     ]

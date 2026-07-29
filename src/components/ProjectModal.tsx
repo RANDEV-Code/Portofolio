@@ -142,12 +142,13 @@ export default function ProjectModal({
         {/* ── Scrollable body ── */}
         <div className="overflow-y-auto">
           {/* Project image / carousel */}
-          <div className="relative h-56 w-full border-b-neo-lg border-structural bg-structural sm:h-72 group select-none">
+          <div className="relative flex w-full items-center justify-center border-b-neo-lg border-structural bg-structural group select-none min-h-[14rem] max-h-[28rem] sm:max-h-[32rem] overflow-hidden">
             <Image
               src={imageList[currentImageIdx]}
               alt={`${project.title} preview ${currentImageIdx + 1}`}
-              fill
-              className="object-cover transition-all duration-300"
+              width={900}
+              height={600}
+              className="max-h-[28rem] sm:max-h-[32rem] w-auto max-w-full object-contain transition-all duration-300"
               sizes="(max-width: 768px) 100vw, 768px"
             />
 
